@@ -61,6 +61,9 @@ export HOST=$(echo $HOST | tr '[:upper:]' '[:lower:]')
 
 # create standalone toolchain, this dependent on android NDK
 TOOLCHAIN_INSTALL_FILE=$NDK_ROOT/build/tools/make_standalone_toolchain.py
+if [ ! -x TOOLCHAIN_INSTALL_FILE ]; then
+    TOOLCHAIN_INSTALL_FILE=$NDK_ROOT/build/tools/make-standalone-toolchain.sh	
+fi
 #PATH_TARGET=
 #if [ $TARGET = "arm64" ]; then
 #    PATH_TARGET=arm
