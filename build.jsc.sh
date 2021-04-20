@@ -59,11 +59,6 @@ export HOST=$(echo $HOST | tr '[:upper:]' '[:lower:]')
 #export TOOLCHAIN_PATH=$NDK_ROOT/toolchains/llvm/prebuilt/$HOST/bin
 #export TOOLCHAIN_PATH=$HOME/my-android-toolchain
 
-# create standalone toolchain, this dependent on android NDK
-TOOLCHAIN_INSTALL_FILE=$NDK_ROOT/build/tools/make_standalone_toolchain.py
-if [ ! -x ${TOOLCHAIN_INSTALL_FILE} ]; then
-    TOOLCHAIN_INSTALL_FILE=$NDK_ROOT/build/tools/make-standalone-toolchain.sh	
-fi
 #PATH_TARGET=
 #if [ $TARGET = "arm64" ]; then
 #    PATH_TARGET=arm
@@ -76,7 +71,14 @@ TOOLCHAIN_INSTALL_PATH=$HOME/standalone_toolchain_$TARGET
 # stl value in gnustl | libc++ | stlport
 STL=libc++
 
-"$TOOLCHAIN_INSTALL_FILE" --arch $TARGET --stl=$STL --api=$APILEVEL --install-dir=$TOOLCHAIN_INSTALL_PATH --force
+# create standalone toolchain, this dependent on android NDK
+TOOLCHAIN_INSTALL_FILE=$NDK_ROOT/build/tools/make_standalone_toolchain.py
+if [ ! -x ${TOOLCHAIN_INSTALL_FILE} ]; then
+    TOOLCHAIN_INSTALL_FILE=$NDK_ROOT/build/tools/make-standalone-toolchain.sh
+    "$TOOLCHAIN_INSTALL_FILE" --arch=$TARGET --stl=$STL --install-dir=$TOOLCHAIN_INSTALL_PATH
+else
+    "$TOOLCHAIN_INSTALL_FILE" --arch $TARGET --stl=$STL --api=$APILEVEL --install-dir=$TOOLCHAIN_INSTALL_PATH --force
+fi
 
 export TOOLCHAIN_PATH=$TOOLCHAIN_INSTALL_PATH
 export SYS_LIBRARY_PATH=$TOOLCHAIN_PATH/lib
