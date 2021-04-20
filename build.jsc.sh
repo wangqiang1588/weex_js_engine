@@ -76,7 +76,7 @@ TOOLCHAIN_INSTALL_PATH=$HOME/standalone_toolchain_$TARGET
 # stl value in gnustl | libc++ | stlport
 STL=libc++
 
-"$TOOLCHAIN_INSTALL_FILE" --arch $TARGET --arch=$TARGET --stl=$STL --api=$APILEVEL --install-dir=$TOOLCHAIN_INSTALL_PATH --force
+"$TOOLCHAIN_INSTALL_FILE" --arch $TARGET --stl=$STL --api=$APILEVEL --install-dir=$TOOLCHAIN_INSTALL_PATH --force
 
 export TOOLCHAIN_PATH=$TOOLCHAIN_INSTALL_PATH
 export SYS_LIBRARY_PATH=$TOOLCHAIN_PATH/lib
